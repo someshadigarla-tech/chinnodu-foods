@@ -1,0 +1,9 @@
+{
+  "otpSessionId": "51dcdc6dfa8f37ad2471d80bf8c3d30309c58a3aa028fd1b487507bb413ab794",
+  "recipient": "+91 9676698427",
+  "purpose": "admin_login",
+  "code": "415319",
+  "expiresAt": "2026-09-24T16:09:57.645Z",
+  "dispatchedAt": "2026-09-24T16:04:57.645Z",
+  "note": "Local Mock Dispatch: Checked by administrator in local dev without SMS API gateway fees."
+}

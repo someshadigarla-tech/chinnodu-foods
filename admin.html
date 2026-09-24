@@ -1,0 +1,3014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal - Chinnodu Foods Order & Financial Management</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/x-icon" href="assets/images/brand-logo.jpg">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --admin-bg: #F5EFEB;
+      --admin-card-bg: #FFFFFF;
+      --admin-header-bg: #4A0B18;
+    }
+
+    body.admin-body {
+      background-color: var(--admin-bg);
+      color: #24140E;
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .admin-header {
+      background: linear-gradient(135deg, #4A0B18 0%, #6B1426 100%);
+      color: #FFFFFF;
+      padding: 0.85rem 1.5rem;
+      box-shadow: 0 4px 20px rgba(74, 11, 24, 0.25);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .admin-header-inner {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .admin-logo-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-gold);
+      object-fit: cover;
+    }
+
+    .admin-brand-title {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #FFFDF9;
+      line-height: 1.2;
+    }
+
+    .admin-portal-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      background: rgba(201, 151, 38, 0.25);
+      color: var(--accent-gold-light);
+      border: 1px solid rgba(201, 151, 38, 0.5);
+      padding: 2px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    .admin-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-admin-action {
+      background: rgba(255, 255, 255, 0.12);
+      color: #FFFDF9;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-admin-action:hover {
+      background: rgba(255, 255, 255, 0.25);
+      color: #fff;
+    }
+
+    .btn-admin-gold {
+      background: linear-gradient(135deg, #C99726, #B5841D);
+      color: #24140E;
+      border: none;
+      font-weight: 700;
+    }
+
+    .btn-admin-gold:hover {
+      background: #D9A835;
+      color: #000;
+    }
+
+    /* Primary Dashboard View Switcher */
+    .view-switcher-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #E8DFD5;
+      padding: 4px;
+      border-radius: 10px;
+    }
+
+    .switch-tab-btn {
+      border: none;
+      background: transparent;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .switch-tab-btn.active {
+      background: var(--primary-maroon);
+      color: #FFFFFF;
+      box-shadow: 0 2px 6px rgba(107, 20, 38, 0.2);
+    }
+
+    /* Login Screen */
+    .login-container {
+      max-width: 440px;
+      margin: 5rem auto;
+      padding: 2.5rem 2rem;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 12px 35px rgba(107, 20, 38, 0.12);
+      border: 1px solid var(--border-color);
+      text-align: center;
+    }
+
+    .login-icon {
+      width: 70px;
+      height: 70px;
+      background: #FAF0E6;
+      color: var(--primary-maroon);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 1.25rem;
+      border: 2px solid var(--border-color);
+    }
+
+    .login-title {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      color: var(--primary-maroon);
+      margin-bottom: 0.5rem;
+    }
+
+    .login-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1.75rem;
+      line-height: 1.5;
+    }
+
+    /* 2FA OTP & Login Enhancements */
+    .login-chip-btn {
+      background: #FAF5F0;
+      border: 1px solid var(--border-color);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--primary-maroon);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .login-chip-btn:hover {
+      background: #F2E4D6;
+      border-color: var(--primary-maroon);
+    }
+    .otp-inputs-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.5rem;
+      margin: 0.5rem 0 0.5rem;
+      transition: transform 0.2s ease;
+    }
+    .otp-shake {
+      animation: otpShake 0.35s ease;
+    }
+    @keyframes otpShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    @keyframes pulseLive {
+      0% { opacity: 0.4; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.15); }
+      100% { opacity: 0.4; transform: scale(0.9); }
+    }
+    .otp-box {
+      width: 100%;
+      height: 54px;
+      font-size: 1.55rem;
+      font-weight: 800;
+      font-family: monospace;
+      text-align: center;
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
+      background: #FFFFFF;
+      color: var(--primary-maroon);
+      outline: none;
+      transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+      box-sizing: border-box;
+      caret-color: var(--primary-maroon);
+    }
+    .otp-box:focus {
+      border-color: var(--primary-maroon);
+      box-shadow: 0 0 0 3.5px rgba(107, 20, 38, 0.2);
+      background: #FFFDF9;
+      transform: translateY(-2px);
+    }
+    .otp-box.filled {
+      border-color: var(--primary-maroon);
+      background: #FAF5F0;
+      box-shadow: 0 2px 6px rgba(107, 20, 38, 0.08);
+    }
+    .otp-preview-card {
+      background: #EBF8FF;
+      border: 1.5px solid #BAE6FD;
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.25rem;
+      text-align: left;
+    }
+    .btn-otp-action {
+      background: #0284C7;
+      color: #fff;
+      border: 1px solid #0369A1;
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .btn-otp-action:hover {
+      opacity: 0.9;
+    }
+
+    /* Main Dashboard Layout */
+    .admin-main {
+      max-width: 1300px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      background: #FFFFFF;
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 2px 8px rgba(36, 20, 14, 0.05);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: transform 0.2s;
+    }
+
+    .stat-card:hover { transform: translateY(-2px); }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .stat-icon.total { background: #EBF3FF; color: #1E40AF; }
+    .stat-icon.pending { background: #FEF3C7; color: #92400E; }
+    .stat-icon.shipped { background: #E0E7FF; color: #4338CA; }
+    .stat-icon.delivered { background: #DCFCE7; color: #166534; }
+    .stat-icon.revenue { background: #FEF9C3; color: #854D0E; }
+    .stat-icon.bank { background: #E0F2FE; color: #0369A1; }
+    .stat-icon.upi { background: #EDE9FE; color: #6D28D9; }
+    .stat-icon.cash { background: #DCFCE7; color: #15803D; }
+
+    .stat-val {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.1;
+    }
+
+    .stat-lbl {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Accounts Card Box */
+    .accounts-overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .account-card-box {
+      background: #FFFFFF;
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      padding: 1.25rem;
+      box-shadow: 0 2px 10px rgba(36, 20, 14, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .account-card-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent-gold);
+    }
+
+    .account-card-box.bank-card::before { background: #2563EB; }
+    .account-card-box.upi-card::before { background: #7C3AED; }
+    .account-card-box.cash-card::before { background: #059669; }
+
+    .acc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .acc-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .acc-id {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+      font-family: monospace;
+    }
+
+    .acc-balance-display {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary-maroon);
+      margin: 0.5rem 0;
+    }
+
+    .acc-footer-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px dashed var(--border-subtle);
+      padding-top: 0.75rem;
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    /* Controls Bar */
+    .controls-bar {
+      background: #FFFFFF;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 6px rgba(36, 20, 14, 0.04);
+    }
+
+    .filter-tabs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: #F4EBE2;
+      border: none;
+      padding: 0.45rem 0.85rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .tab-btn:hover { background: #E8DCCF; }
+    .tab-btn.active { background: var(--primary-maroon); color: #fff; }
+
+    .tab-badge {
+      background: rgba(0, 0, 0, 0.15);
+      padding: 1px 6px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+    }
+
+    .tab-btn.active .tab-badge { background: rgba(255, 255, 255, 0.25); }
+
+    .search-box-admin {
+      display: flex;
+      align-items: center;
+      background: #FFFDF9;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.4rem 0.8rem;
+      min-width: 280px;
+    }
+
+    .search-box-admin input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.88rem;
+      width: 100%;
+      color: var(--text-main);
+      padding-left: 0.5rem;
+    }
+
+    /* Orders Grid / Cards */
+    .orders-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* Pagination Controls */
+    .pagination-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+      padding: 1rem 1.25rem;
+      background: #FFFFFF;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 8px rgba(36, 20, 14, 0.04);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .btn-page-nav {
+      background: #FAF5F0;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-page-nav:hover:not(:disabled) {
+      background: var(--primary-maroon);
+      color: #FFFFFF;
+      border-color: var(--primary-maroon);
+    }
+
+    .btn-page-nav:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .order-card {
+      background: #FFFFFF;
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 3px 12px rgba(36, 20, 14, 0.05);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .order-card:hover { box-shadow: 0 6px 18px rgba(36, 20, 14, 0.08); }
+
+    .order-card-header {
+      background: #FAF5F0;
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .order-id-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .order-id-badge {
+      font-family: monospace;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--primary-maroon);
+      background: #FFE8EC;
+      padding: 3px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(107, 20, 38, 0.2);
+    }
+
+    .order-date {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: capitalize;
+    }
+
+    .status-received { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
+    .status-confirmed { background: #E0F2FE; color: #0369A1; border: 1px solid #BAE6FD; }
+    .status-packed { background: #F3E8FF; color: #6B21A8; border: 1px solid #E9D5FF; }
+    .status-shipped { background: #FFEDD5; color: #C2410C; border: 1px solid #FDBA74; }
+    .status-delivered { background: #DCFCE7; color: #15803D; border: 1px solid #86EFAC; }
+    .status-cancelled { background: #FEE2E2; color: #991B1B; border: 1px solid #FCA5A5; }
+
+    .order-card-body {
+      padding: 1.25rem;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .order-card-body { grid-template-columns: 1fr; }
+    }
+
+    .customer-info-box {
+      background: #FFFDF9;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .box-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary-maroon);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 1px dashed var(--border-color);
+      padding-bottom: 0.4rem;
+    }
+
+    .cust-detail-row {
+      font-size: 0.88rem;
+      margin-bottom: 0.4rem;
+      display: flex;
+      gap: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .cust-detail-row strong {
+      color: var(--text-muted);
+      min-width: 75px;
+    }
+
+    .cust-actions-bar {
+      margin-top: 0.75rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-cust-wa {
+      background: #25D366;
+      color: #fff;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-cust-call {
+      background: #4B5563;
+      color: #fff;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
+
+    .items-table th {
+      text-align: left;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+      padding: 4px 6px;
+    }
+
+    .items-table td {
+      padding: 6px;
+      border-bottom: 1px solid var(--border-subtle);
+      vertical-align: middle;
+    }
+
+    .order-totals-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+      padding-top: 0.75rem;
+      font-weight: 700;
+      border-top: 1px dashed var(--border-color);
+      margin-top: 0.5rem;
+    }
+
+    .order-dispatch-panel {
+      grid-column: 1 / -1;
+      background: #FAF8F5;
+      border: 1.5px solid #E8DFD5;
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    .tracking-form-grid {
+      display: grid;
+      grid-template-columns: 180px 200px 1fr auto;
+      gap: 0.75rem;
+      align-items: flex-end;
+    }
+
+    @media (max-width: 992px) {
+      .tracking-form-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .tracking-form-grid { grid-template-columns: 1fr; }
+    }
+
+    .form-group-admin {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-group-admin label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .input-admin {
+      padding: 0.55rem 0.75rem;
+      font-size: 0.88rem;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: #FFFFFF;
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .input-admin:focus {
+      border-color: var(--primary-maroon);
+      box-shadow: 0 0 0 2px rgba(107, 20, 38, 0.1);
+    }
+
+    .btn-save-tracking {
+      background: var(--primary-maroon);
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-save-tracking:hover { background: #871930; }
+
+    .btn-notify-wa {
+      background: #25D366;
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .btn-notify-wa:hover { background: #1EBE5D; }
+
+    .btn-print-slip {
+      background: #FFF;
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-print-slip:hover { background: #F4EBE2; }
+
+    .tracking-active-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: #E8F5E9;
+      border: 1px solid #A5D6A7;
+      padding: 0.5rem 0.85rem;
+      border-radius: 8px;
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+      color: #1B5E20;
+    }
+
+    .tracking-active-badge a {
+      color: #0D47A1;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    .ledger-table-wrap {
+      background: #FFFFFF;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 8px rgba(36, 20, 14, 0.05);
+      overflow-x: auto;
+    }
+
+    .ledger-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+
+    .ledger-table th {
+      background: #FAF5F0;
+      padding: 10px 14px;
+      border-bottom: 1.5px solid var(--border-color);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    .ledger-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      vertical-align: middle;
+    }
+
+    .ledger-table tr:hover { background: #FFFDF9; }
+
+    .txn-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .txn-income { background: #DCFCE7; color: #166534; }
+    .txn-expense { background: #FEE2E2; color: #991B1B; }
+    .txn-transfer { background: #E0E7FF; color: #4338CA; }
+
+    .empty-admin-state {
+      background: #FFFFFF;
+      border-radius: 12px;
+      border: 2px dashed var(--border-color);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .empty-admin-icon {
+      font-size: 3rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .admin-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .admin-modal-overlay.active { display: flex; }
+
+    .admin-modal-card {
+      background: #FFFFFF;
+      border-radius: 16px;
+      max-width: 650px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 1.75rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    .admin-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .admin-modal-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      color: var(--primary-maroon);
+    }
+
+    .close-modal-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    @media print {
+      body * { visibility: hidden; }
+      .printable-slip, .printable-slip * { visibility: visible; }
+      .printable-slip {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: #fff;
+        padding: 20px;
+        color: #000;
+      }
+    }
+  </style>
+</head>
+<body class="admin-body">
+
+  <!-- ADMIN HEADER -->
+  <header class="admin-header">
+    <div class="admin-header-inner">
+      <div style="display:flex; align-items:center; gap:1rem;">
+        <a href="index.html" class="admin-brand" title="View Storefront">
+          <img src="assets/images/brand-logo.jpg" alt="Chinnodu Foods" class="admin-logo-img">
+          <div>
+            <div class="admin-brand-title">Chinnodu Foods</div>
+            <div class="admin-portal-badge">🛡️ Store Admin &amp; Financial Control</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="admin-nav-actions" id="admin-nav-actions" style="display: none;">
+        <div style="display:flex; align-items:center; gap:0.4rem; background:rgba(255,255,255,0.12); padding:4px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.18); font-size:0.8rem; color:#FFFDF9;">
+          <span>👤</span>
+          <span style="font-weight:600;" id="header-admin-name">Somesh Adigarla</span>
+          <span style="background:#22C55E; color:#fff; font-size:0.68rem; padding:1px 6px; border-radius:999px; font-weight:700;">2FA ON</span>
+        </div>
+        <button class="btn-admin-action btn-admin-gold" id="btn-header-primary-action" onclick="handleHeaderPrimaryAction()">
+          <span>➕ Add Manual Order</span>
+        </button>
+        <button class="btn-admin-action" onclick="handleHeaderExportAction()">
+          <span>📊 Export CSV</span>
+        </button>
+        <a href="index.html" class="btn-admin-action" target="_blank">
+          <span>🏪 View Website</span>
+        </a>
+        <button class="btn-admin-action" onclick="adminLogout()" style="background:rgba(239, 68, 68, 0.25); border-color:rgba(239, 68, 68, 0.4);">
+          <span>🚪 Logout</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- LOGIN CONTAINER (2-STEP: CREDENTIALS + 2FA OTP) -->
+  <div class="login-container" id="admin-login-screen">
+    
+    <!-- STEP 1: CREDENTIALS (EMAIL / PHONE & PASSWORD) -->
+    <div id="login-step-1">
+      <div class="login-icon">🛡️</div>
+      <div class="admin-portal-badge" style="margin-bottom: 0.5rem; background: rgba(107, 20, 38, 0.1); color: var(--primary-maroon); border-color: rgba(107, 20, 38, 0.25);">
+        Chinnodu Foods — Owner Access
+      </div>
+      <h1 class="login-title">Admin Sign In</h1>
+      <p class="login-desc">Sign in with your registered email or phone number to access store orders, courier tracking, and business finance ledger.</p>
+      
+      <!-- Quick Fill Helper Chips -->
+      <div style="display:flex; justify-content:center; gap:0.4rem; flex-wrap:wrap; margin-bottom:1.25rem;">
+        <button type="button" class="login-chip-btn" onclick="fillCredential('someshadigarla@gmail.com')">
+          <span>📧 someshadigarla@gmail.com</span>
+        </button>
+        <button type="button" class="login-chip-btn" onclick="fillCredential('9676698427')">
+          <span>📱 9676698427</span>
+        </button>
+      </div>
+
+      <form id="admin-login-form" onsubmit="handleAdminLogin(event)">
+        <div style="margin-bottom:1.1rem; text-align:left;">
+          <label style="font-size:0.78rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:4px; display:block;">Admin Email or Phone</label>
+          <input type="text" id="admin-username-input" class="input-admin" style="width:100%; padding:0.75rem 1rem; font-size:0.95rem; box-sizing:border-box;" placeholder="Enter email or mobile number" required autocomplete="username" value="someshadigarla@gmail.com">
+        </div>
+        <div style="margin-bottom:1.35rem; text-align:left;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <label style="font-size:0.78rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Password</label>
+            <button type="button" onclick="togglePasswordVisibility()" style="background:none; border:none; color:var(--text-muted); font-size:0.75rem; cursor:pointer;" id="toggle-pwd-btn">👁️ Show</button>
+          </div>
+          <input type="password" id="admin-password-input" class="input-admin" style="width:100%; padding:0.75rem 1rem; font-size:0.95rem; box-sizing:border-box;" placeholder="••••••••••••" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn-save-tracking" id="btn-login-submit" style="width:100%; justify-content:center; padding:0.85rem; font-size:1rem;">
+          <span>Continue to 2-Step OTP ➡️</span>
+        </button>
+      </form>
+
+      <div style="margin-top:1.25rem; font-size:0.78rem; color:var(--text-muted); background:#FAF5F0; padding:10px 14px; border-radius:10px; border:1px solid var(--border-color); text-align:left; line-height:1.5;">
+        🔒 <strong>Two-Factor Authentication:</strong><br>
+        Access is protected by cryptographically secure 6-digit OTP and server-side sessions.
+      </div>
+    </div>
+
+    <!-- STEP 2: OTP VERIFICATION -->
+    <div id="login-step-2" style="display: none;">
+      <div class="login-icon" style="background:#EBF8FF; color:#0284C7; border-color:#BAE6FD;">📲</div>
+      <div class="admin-portal-badge" style="margin-bottom: 0.5rem; background: rgba(2, 132, 199, 0.1); color: #0284C7; border-color: rgba(2, 132, 199, 0.3);">
+        Step 2: Two-Factor Verification
+      </div>
+      <h1 class="login-title">Verify OTP Code</h1>
+      <p class="login-desc" style="margin-bottom:1rem;" id="otp-step-instructions">
+        A verification code has been sent to your registered mobile number.
+      </p>
+
+      <!-- Target Phone Display Badge -->
+      <div style="display:inline-flex; align-items:center; gap:0.5rem; background:#F0FDF4; border:1.5px solid #86EFAC; color:#166534; padding:6px 14px; border-radius:999px; font-weight:700; font-size:0.95rem; margin-bottom:1.25rem;">
+        <span>📱</span> <span id="otp-phone-display">+91 96766 •••• 27</span>
+      </div>
+
+      <!-- Secure Dispatch Notification Banner -->
+      <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px; padding:0.85rem 1rem; margin-bottom:1rem; font-size:0.85rem; color:#475569; display:flex; align-items:center; gap:0.6rem; text-align:left;">
+        <span>🔒</span>
+        <span>A verification code has been sent to your registered mobile number. Enter the 6-digit code below to complete sign-in.</span>
+      </div>
+
+      <!-- Local Simulated SMS Delivery Card (Auto-displays in development) -->
+      <div id="otp-dev-preview" style="display:none; background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:12px; padding:12px 14px; margin-bottom:1.25rem; text-align:left; box-shadow:0 2px 8px rgba(22, 101, 52, 0.08);">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div style="font-size:0.82rem; color:#166534; font-weight:700; display:flex; align-items:center; gap:6px;">
+            <span>📲 Simulated SMS to</span>
+            <span style="background:#DCFCE7; padding:2px 8px; border-radius:999px;">+91 9676698427</span>
+          </div>
+          <button type="button" onclick="autoFillDevOtp()" style="background:#166534; color:#fff; border:none; border-radius:6px; padding:4px 10px; font-size:0.75rem; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
+            ⚡ Auto-Fill Code
+          </button>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:8px; margin-top:6px;">
+          <span style="font-size:0.82rem; color:#166534;">Your OTP Code:</span>
+          <span style="font-size:1.45rem; font-weight:800; font-family:monospace; color:#15803D; letter-spacing:4px;" id="dev-otp-code-display">------</span>
+        </div>
+        <div style="font-size:0.72rem; color:#166534; opacity:0.85; margin-top:2px;">
+          Local development server active • Real-time typing auto-verifies when 6 digits are entered
+        </div>
+      </div>
+
+      <!-- Error Banner (Hidden by default) -->
+      <div id="otp-error-banner" style="display:none; background:#FEF2F2; border:1px solid #FCA5A5; color:#991B1B; border-radius:8px; padding:8px 12px; font-size:0.85rem; margin-bottom:1rem; text-align:left;"></div>
+
+      <!-- 6-DIGIT OTP INPUT FORM -->
+      <form id="admin-otp-form" onsubmit="handleVerifyOtp(event)">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <label style="font-size:0.8rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Enter 6-Digit Code</label>
+          <span style="font-size:0.75rem; color:#059669; font-weight:700; display:flex; align-items:center; gap:5px;">
+            <span style="display:inline-block; width:7px; height:7px; background:#10B981; border-radius:50%; animation:pulseLive 1.5s infinite;"></span> Real-time auto-verify
+          </span>
+        </div>
+        
+        <div class="otp-inputs-grid" id="otp-inputs-grid">
+          <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="otp-box" id="otp-digit-0" autofocus autocomplete="one-time-code">
+          <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="otp-box" id="otp-digit-1">
+          <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="otp-box" id="otp-digit-2">
+          <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="otp-box" id="otp-digit-3">
+          <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="otp-box" id="otp-digit-4">
+          <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="otp-box" id="otp-digit-5">
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; font-size:0.78rem; color:var(--text-muted);">
+          <span>⏱️ OTP Expiry: <strong id="otp-expiry-timer" style="color:var(--primary-maroon);">05:00</strong></span>
+          <span style="font-style:italic;">Type or paste 6 digits</span>
+        </div>
+
+        <button type="submit" class="btn-save-tracking" id="btn-otp-submit" style="width:100%; justify-content:center; padding:0.85rem; font-size:1rem; margin-top:1.25rem;">
+          <span>Verify OTP 🛡️</span>
+        </button>
+      </form>
+
+      <!-- RESEND & BACK ACTIONS -->
+      <div style="margin-top:1.25rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; font-size:0.85rem;">
+        <button type="button" onclick="backToStep1()" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-weight:600; padding:4px 0;">
+          ⬅️ Back to Login
+        </button>
+        <button type="button" id="btn-resend-otp" onclick="handleResendOtp()" style="background:none; border:none; color:var(--primary-maroon); cursor:pointer; font-weight:700; padding:4px 0;" disabled>
+          Resend OTP in <span id="resend-countdown">60</span>s
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MAIN ADMIN DASHBOARD -->
+  <main class="admin-main" id="admin-dashboard-screen" style="display: none;">
+    
+    <!-- TOP NAVIGATION VIEW SWITCHER: ORDERS vs MONEY IN ACCOUNTS -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+      <div class="view-switcher-bar">
+        <button type="button" class="switch-tab-btn active" id="tab-switch-orders" onclick="switchAdminView('orders')">
+          <span>📦 Orders &amp; Dispatches</span>
+          <span class="tab-badge" id="badge-top-orders-count">0</span>
+        </button>
+        <button type="button" class="switch-tab-btn" id="tab-switch-finance" onclick="switchAdminView('finance')">
+          <span>💰 Money in Accounts &amp; Ledger</span>
+        </button>
+      </div>
+
+      <div style="font-size:0.85rem; color:var(--text-muted); display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+        <span>Session:</span>
+        <strong style="color:var(--primary-maroon);">Somesh Adigarla</strong>
+        <span style="background:#DCFCE7; color:#15803D; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:999px; border:1px solid #86EFAC;">🛡️ 2FA Verified (+91 96766 98427)</span>
+      </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 1: ORDERS & TRACKING MANAGEMENT -->
+    <!-- ===================================================================== -->
+    <div id="section-orders-view">
+      
+      <!-- STATS OVERVIEW CARDS -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon total">📦</div>
+          <div>
+            <div class="stat-val" id="stat-total-orders">0</div>
+            <div class="stat-lbl">Total Orders</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon pending">⏳</div>
+          <div>
+            <div class="stat-val" id="stat-pending-orders">0</div>
+            <div class="stat-lbl">Pending Dispatch</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon shipped">🚚</div>
+          <div>
+            <div class="stat-val" id="stat-shipped-orders">0</div>
+            <div class="stat-lbl">In Transit / Shipped</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon delivered">✅</div>
+          <div>
+            <div class="stat-val" id="stat-delivered-orders">0</div>
+            <div class="stat-lbl">Delivered</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon revenue">💰</div>
+          <div>
+            <div class="stat-val" id="stat-total-revenue">₹0</div>
+            <div class="stat-lbl">Total Prepaid Sales</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FILTER & SEARCH BAR -->
+      <div class="controls-bar">
+        <div class="filter-tabs">
+          <button class="tab-btn active" onclick="filterOrders('all')">
+            <span>All Orders</span>
+            <span class="tab-badge" id="badge-all">0</span>
+          </button>
+          <button class="tab-btn" onclick="filterOrders('received')">
+            <span>🔔 New (Received)</span>
+            <span class="tab-badge" id="badge-received">0</span>
+          </button>
+          <button class="tab-btn" onclick="filterOrders('confirmed')">
+            <span>👍 Confirmed</span>
+            <span class="tab-badge" id="badge-confirmed">0</span>
+          </button>
+          <button class="tab-btn" onclick="filterOrders('packed')">
+            <span>🎁 Packed</span>
+            <span class="tab-badge" id="badge-packed">0</span>
+          </button>
+          <button class="tab-btn" onclick="filterOrders('shipped')">
+            <span>🚚 Shipped / In-Transit</span>
+            <span class="tab-badge" id="badge-shipped">0</span>
+          </button>
+          <button class="tab-btn" onclick="filterOrders('delivered')">
+            <span>✅ Delivered</span>
+            <span class="tab-badge" id="badge-delivered">0</span>
+          </button>
+        </div>
+
+        <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+          <div class="search-box-admin">
+            <span>🔍</span>
+            <input type="text" id="admin-search-input" placeholder="Search Order ID, Name, Phone..." oninput="handleAdminSearch()">
+          </div>
+          <button class="btn-admin-action" onclick="fetchOrders()" style="color:var(--text-main); background:#F4EBE2;" title="Reload Orders">
+            <span>🔄 Refresh</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ORDERS LIST CONTAINER -->
+      <div class="orders-list" id="orders-list-container">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- PAGINATION BAR (High Concurrency - Smooth Navigation across 100k Orders) -->
+      <div class="pagination-bar" id="orders-pagination-bar">
+        <div style="font-size:0.9rem; color:var(--text-muted);" id="pagination-info-text">
+          Showing <strong>0</strong> to <strong>0</strong> of <strong>0</strong> orders
+        </div>
+        
+        <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+          <button type="button" class="btn-page-nav" id="btn-page-first" onclick="goToPage(1)" title="First Page">
+            &laquo; First
+          </button>
+          <button type="button" class="btn-page-nav" id="btn-page-prev" onclick="goToPage(CURRENT_PAGE - 1)" title="Previous Page">
+            &lsaquo; Prev
+          </button>
+          <span style="font-weight:700; font-size:0.9rem; padding:0 0.5rem; min-width:110px; text-align:center;" id="pagination-current-page-text">Page 1 of 1</span>
+          <button type="button" class="btn-page-nav" id="btn-page-next" onclick="goToPage(CURRENT_PAGE + 1)" title="Next Page">
+            Next &rsaquo;
+          </button>
+          <button type="button" class="btn-page-nav" id="btn-page-last" onclick="goToPage(TOTAL_PAGES)" title="Last Page">
+            Last &raquo;
+          </button>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.85rem; color:var(--text-muted);">
+          <span>Per Page:</span>
+          <select id="select-page-limit" class="input-admin" style="padding:4px 8px; font-weight:700;" onchange="changePageLimit(this.value)">
+            <option value="25" selected>25 orders</option>
+            <option value="50">50 orders</option>
+            <option value="100">100 orders</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 2: MONEY IN ACCOUNTS & FINANCIAL LEDGER -->
+    <!-- ===================================================================== -->
+    <div id="section-finance-view" style="display: none;">
+      
+      <!-- FINANCIAL KPI OVERVIEW CARDS -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon upi">📱</div>
+          <div>
+            <div class="stat-val" id="stat-fin-upi">₹0</div>
+            <div class="stat-lbl">UPI Wallet (9676698427-2@ybl)</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon bank">🏦</div>
+          <div>
+            <div class="stat-val" id="stat-fin-bank">₹0</div>
+            <div class="stat-lbl">SBI Current Account</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon cash">💵</div>
+          <div>
+            <div class="stat-val" id="stat-fin-cash">₹0</div>
+            <div class="stat-lbl">Cash in Hand (Counter)</div>
+          </div>
+        </div>
+        <div class="stat-card" style="border:2px solid var(--accent-gold);">
+          <div class="stat-icon revenue">💎</div>
+          <div>
+            <div class="stat-val" style="color:var(--primary-maroon);" id="stat-fin-liquid">₹0</div>
+            <div class="stat-lbl">Total Net Liquid Funds</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DETAILED ACCOUNTS CARDS -->
+      <div class="accounts-overview-grid" id="accounts-cards-container">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- LEDGER CONTROLS & FILTER BAR -->
+      <div class="controls-bar">
+        <div class="filter-tabs">
+          <button class="tab-btn active" onclick="filterTransactions('all')">
+            <span>All Ledger Records</span>
+          </button>
+          <button class="tab-btn" onclick="filterTransactions('income')">
+            <span>🟢 Inflow (Prepaid Sales)</span>
+          </button>
+          <button class="tab-btn" onclick="filterTransactions('expense')">
+            <span>🔴 Outflow (Expenses &amp; Stock)</span>
+          </button>
+          <button class="tab-btn" onclick="filterTransactions('transfer')">
+            <span>🔄 Internal Transfers</span>
+          </button>
+        </div>
+
+        <div style="display:flex; gap:0.5rem; align-items:center;">
+          <button class="btn-admin-action btn-admin-gold" onclick="openNewTxnModal()">
+            <span>➕ Record Transaction</span>
+          </button>
+          <button class="btn-admin-action" onclick="fetchFinanceData()" style="color:var(--text-main); background:#F4EBE2;">
+            <span>🔄 Refresh</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- FINANCIAL LEDGER TABLE -->
+      <div class="ledger-table-wrap">
+        <table class="ledger-table">
+          <thead>
+            <tr>
+              <th>Date &amp; Time</th>
+              <th>Txn ID</th>
+              <th>Type</th>
+              <th>Account</th>
+              <th>Category</th>
+              <th>Description &amp; Reference</th>
+              <th style="text-align:right;">Amount (₹)</th>
+              <th style="text-align:center;">Status</th>
+            </tr>
+          </thead>
+          <tbody id="ledger-table-body">
+            <!-- Rendered dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL: MANUAL NEW ORDER (PREPAID ONLY) -->
+  <!-- ===================================================================== -->
+  <div class="admin-modal-overlay" id="new-order-modal">
+    <div class="admin-modal-card">
+      <div class="admin-modal-header">
+        <h2 class="admin-modal-title">➕ Add Manual / Offline Order</h2>
+        <button class="close-modal-btn" onclick="closeNewOrderModal()">&times;</button>
+      </div>
+      <form id="new-order-form" onsubmit="handleManualOrderSubmit(event)">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:0.75rem;">
+          <div class="form-group-admin">
+            <label>Customer Name *</label>
+            <input type="text" id="manual-name" class="input-admin" required placeholder="e.g. Ramesh Reddy">
+          </div>
+          <div class="form-group-admin">
+            <label>Phone Number *</label>
+            <input type="tel" id="manual-phone" class="input-admin" required placeholder="e.g. 9876543210">
+          </div>
+        </div>
+
+        <div class="form-group-admin" style="margin-bottom:0.75rem;">
+          <label>Delivery Address *</label>
+          <input type="text" id="manual-address" class="input-admin" required placeholder="Flat/House, Street, Area">
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.75rem; margin-bottom:0.75rem;">
+          <div class="form-group-admin">
+            <label>City *</label>
+            <input type="text" id="manual-city" class="input-admin" required placeholder="e.g. Hyderabad">
+          </div>
+          <div class="form-group-admin">
+            <label>State *</label>
+            <input type="text" id="manual-state" class="input-admin" value="Andhra Pradesh" required>
+          </div>
+          <div class="form-group-admin">
+            <label>Pincode *</label>
+            <input type="text" id="manual-pincode" class="input-admin" required placeholder="e.g. 500001">
+          </div>
+        </div>
+
+        <div class="form-group-admin" style="margin-bottom:0.75rem;">
+          <label>Items Ordered (Description &amp; Packs) *</label>
+          <textarea id="manual-items-text" class="input-admin" rows="3" required placeholder="e.g. 1x Bellam Sunnunda (500g), 2x Gongura Chicken Pickle (500g)"></textarea>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1rem;">
+          <div class="form-group-admin">
+            <label>Total Amount (₹) *</label>
+            <input type="number" id="manual-total" class="input-admin" required min="1" placeholder="e.g. 1250">
+          </div>
+          <div class="form-group-admin">
+            <label>Payment Method (Prepaid)</label>
+            <select id="manual-payment" class="input-admin">
+              <option value="upi">Prepaid UPI (PhonePe / GPay) - Auto credits UPI Account</option>
+              <option value="direct">Direct Bank Transfer</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group-admin" style="margin-bottom:1.25rem;">
+          <label>Special Instructions / Notes</label>
+          <input type="text" id="manual-notes" class="input-admin" placeholder="e.g. Extra spicy / Festive gift packing">
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:0.75rem;">
+          <button type="button" class="btn-admin-action" style="color:var(--text-main); background:#F4EBE2;" onclick="closeNewOrderModal()">Cancel</button>
+          <button type="submit" class="btn-save-tracking">Save Order</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL: RECORD TRANSACTION (EXPENSE / INCOME / TRANSFER) -->
+  <!-- ===================================================================== -->
+  <div class="admin-modal-overlay" id="new-txn-modal">
+    <div class="admin-modal-card">
+      <div class="admin-modal-header">
+        <h2 class="admin-modal-title">💰 Record Financial Transaction</h2>
+        <button class="close-modal-btn" onclick="closeNewTxnModal()">&times;</button>
+      </div>
+      <form id="new-txn-form" onsubmit="handleTransactionSubmit(event)">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:0.75rem;">
+          <div class="form-group-admin">
+            <label>Transaction Type *</label>
+            <select id="txn-type" class="input-admin" onchange="handleTxnTypeChange()">
+              <option value="expense">🔴 Expense / Outflow (Money Out)</option>
+              <option value="income">🟢 Income / Inflow (Money In)</option>
+              <option value="transfer">🔄 Internal Transfer between Accounts</option>
+            </select>
+          </div>
+          <div class="form-group-admin">
+            <label>Primary Account *</label>
+            <select id="txn-account" class="input-admin">
+              <option value="acc_bank">🏦 Business Current Account (SBI)</option>
+              <option value="acc_upi">📱 UPI Wallet (9676698427-2@ybl)</option>
+              <option value="acc_cash">💵 Cash in Hand (Store Register)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group-admin" id="transfer-destination-group" style="display:none; margin-bottom:0.75rem;">
+          <label>Transfer Destination Account (Receiving Money) *</label>
+          <select id="txn-to-account" class="input-admin">
+            <option value="acc_bank">🏦 Business Current Account (SBI)</option>
+            <option value="acc_upi">📱 UPI Wallet (9676698427-2@ybl)</option>
+            <option value="acc_cash">💵 Cash in Hand (Store Register)</option>
+          </select>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:0.75rem;">
+          <div class="form-group-admin">
+            <label>Category *</label>
+            <select id="txn-category" class="input-admin">
+              <option value="Raw Ingredients & Spices">Raw Ingredients &amp; Spices (Chillies, Urad Dal, Oil)</option>
+              <option value="Pure Cow Ghee & Oils">Pure Cow Ghee &amp; Wood-pressed Oils</option>
+              <option value="Packaging & Containers">Packaging Jars, Boxes, Bubble Wrap</option>
+              <option value="Courier Freight">Courier Freight &amp; Speed Post Bills</option>
+              <option value="Online Order Sale">Online Order Sale (Prepaid UPI)</option>
+              <option value="Kitchen Wages & Labor">Homemaker Wages &amp; Kitchen Labor</option>
+              <option value="Utilities & Gas">Gas &amp; Cloud Kitchen Utilities</option>
+              <option value="Owner Drawings">Owner Drawings / Profit Withdrawal</option>
+              <option value="General Expense">General Expense</option>
+            </select>
+          </div>
+          <div class="form-group-admin">
+            <label>Amount (₹) *</label>
+            <input type="number" id="txn-amount" class="input-admin" required min="1" placeholder="e.g. 1500">
+          </div>
+        </div>
+
+        <div class="form-group-admin" style="margin-bottom:0.75rem;">
+          <label>Description / Narrative *</label>
+          <input type="text" id="txn-desc" class="input-admin" required placeholder="e.g. Purchased 10kg Urad Dal & 5kg Guntur red chillies from wholesale">
+        </div>
+
+        <div class="form-group-admin" style="margin-bottom:1.25rem;">
+          <label>Reference / UTR / Voucher Number</label>
+          <input type="text" id="txn-ref" class="input-admin" placeholder="e.g. UTR / UPI Ref 4291823901 or Bill #104">
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:0.75rem;">
+          <button type="button" class="btn-admin-action" style="color:var(--text-main); background:#F4EBE2;" onclick="closeNewTxnModal()">Cancel</button>
+          <button type="submit" class="btn-save-tracking">Save Transaction</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- PRINTABLE PACKING SLIP CONTAINER (Hidden until print) -->
+  <div id="print-container" class="printable-slip" style="display:none;"></div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // State
+    let ALL_ORDERS = [];
+    let CURRENT_ORDER_FILTER = 'all';
+    let SEARCH_QUERY = '';
+    let ACTIVE_VIEW = 'orders';
+    let FINANCE_DATA = { accounts: [], transactions: [], summary: {} };
+    let CURRENT_TXN_FILTER = 'all';
+    let CURRENT_PAGE = 1;
+    let TOTAL_PAGES = 1;
+    let TOTAL_ORDERS = 0;
+    let PAGE_SIZE = 25;
+    let SEARCH_DEBOUNCE_TIMER = null;
+
+    const COURIER_URL_MAP = {
+      'India Post (Speed Post)': 'https://www.indiapost.gov.in/_layouts/15/dop.portal.tracking/trackconsignment.aspx',
+      'DTDC Express': 'https://www.dtdc.in/tracking.asp',
+      'Delhivery': 'https://www.delhivery.com/track/package/',
+      'Blue Dart': 'https://www.bluedart.com/tracking',
+      'The Professional Couriers': 'https://www.tpcindia.com',
+      'ST Courier': 'https://stcourier.com/track',
+      'Shadowfax': 'https://tracker.shadowfax.in/',
+      'Other': ''
+    };
+
+    // 2FA OTP State
+    let CURRENT_OTP_SESSION_ID = null;
+    let RESEND_TIMER_INTERVAL = null;
+    let RESEND_SECONDS = 60;
+    let OTP_EXPIRY_INTERVAL = null;
+    let OTP_EXPIRY_SECONDS = 300;
+    let IS_VERIFYING_OTP = false;
+
+    // Real-Time OTP Helpers
+    function updateOtpFilledState() {
+      for (let j = 0; j < 6; j++) {
+        const b = document.getElementById(`otp-digit-${j}`);
+        if (!b) continue;
+        if (b.value && b.value.trim() !== "") {
+          b.classList.add("filled");
+        } else {
+          b.classList.remove("filled");
+        }
+      }
+    }
+
+    function getEnteredOtpCode() {
+      let code = "";
+      for (let j = 0; j < 6; j++) {
+        const b = document.getElementById(`otp-digit-${j}`);
+        if (b) code += (b.value || "").trim();
+      }
+      return code;
+    }
+
+    function checkAndAutoVerifyOtp() {
+      const code = getEnteredOtpCode();
+      if (code.length === 6 && /^\d{6}$/.test(code) && !IS_VERIFYING_OTP) {
+        handleVerifyOtp();
+      }
+    }
+
+    function startOtpExpiryCountdown(seconds = 300) {
+      if (OTP_EXPIRY_INTERVAL) clearInterval(OTP_EXPIRY_INTERVAL);
+      OTP_EXPIRY_SECONDS = seconds;
+      const timerSpan = document.getElementById("otp-expiry-timer");
+
+      const updateDisplay = () => {
+        if (!timerSpan) return;
+        const mins = Math.floor(OTP_EXPIRY_SECONDS / 60);
+        const secs = OTP_EXPIRY_SECONDS % 60;
+        timerSpan.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        if (OTP_EXPIRY_SECONDS <= 60) {
+          timerSpan.style.color = "#DC2626";
+        } else {
+          timerSpan.style.color = "var(--primary-maroon)";
+        }
+      };
+
+      updateDisplay();
+
+      OTP_EXPIRY_INTERVAL = setInterval(() => {
+        OTP_EXPIRY_SECONDS--;
+        if (OTP_EXPIRY_SECONDS <= 0) {
+          clearInterval(OTP_EXPIRY_INTERVAL);
+          if (timerSpan) {
+            timerSpan.textContent = "00:00 (Expired)";
+            timerSpan.style.color = "#DC2626";
+          }
+          const errBanner = document.getElementById("otp-error-banner");
+          if (errBanner) {
+            errBanner.textContent = "OTP expired. Please request a new OTP.";
+            errBanner.style.display = "block";
+          }
+        } else {
+          updateDisplay();
+        }
+      }, 1000);
+    }
+
+    // Developer Helper: Simulated OTP Delivery for Localhost
+    let LAST_DEV_OTP_CODE = null;
+
+    async function loadDevOtpPreview() {
+      try {
+        const res = await fetch("/api/admin/dev-dispatched-otp");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && data.code) {
+            LAST_DEV_OTP_CODE = data.code;
+            const previewBox = document.getElementById("otp-dev-preview");
+            const codeDisplay = document.getElementById("dev-otp-code-display");
+            if (previewBox && codeDisplay) {
+              codeDisplay.textContent = data.code;
+              previewBox.style.display = "block";
+            }
+          }
+        }
+      } catch (e) {
+        console.warn("Could not fetch dev OTP preview:", e);
+      }
+    }
+
+    function autoFillDevOtp() {
+      if (!LAST_DEV_OTP_CODE || LAST_DEV_OTP_CODE.length !== 6) return;
+      for (let j = 0; j < 6; j++) {
+        const box = document.getElementById(`otp-digit-${j}`);
+        if (box) box.value = LAST_DEV_OTP_CODE[j] || "";
+      }
+      updateOtpFilledState();
+      checkAndAutoVerifyOtp();
+    }
+
+    // Check Authentication on Page Load via Server-side Session
+    document.addEventListener("DOMContentLoaded", async () => {
+      setupOtpInputHandlers();
+
+      try {
+        const res = await fetch("/api/admin/check-auth", { credentials: "include" });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.authenticated) {
+            showDashboard();
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn("Auth check failed:", err);
+      }
+
+      // Not authenticated: check if active OTP session was previously stored
+      const savedOtpSessionId = sessionStorage.getItem("admin_otp_session_id");
+      if (savedOtpSessionId) {
+        CURRENT_OTP_SESSION_ID = savedOtpSessionId;
+        document.getElementById("admin-login-screen").style.display = "block";
+        document.getElementById("login-step-1").style.display = "none";
+        document.getElementById("login-step-2").style.display = "block";
+        document.getElementById("admin-dashboard-screen").style.display = "none";
+        document.getElementById("admin-nav-actions").style.display = "none";
+        startOtpExpiryCountdown(300);
+        updateOtpFilledState();
+        loadDevOtpPreview();
+        const firstBox = document.getElementById("otp-digit-0");
+        if (firstBox) firstBox.focus();
+        return;
+      }
+
+      // Not authenticated and no active OTP session: show login screen step 1
+      document.getElementById("admin-login-screen").style.display = "block";
+      document.getElementById("login-step-1").style.display = "block";
+      document.getElementById("login-step-2").style.display = "none";
+      document.getElementById("admin-dashboard-screen").style.display = "none";
+      document.getElementById("admin-nav-actions").style.display = "none";
+    });
+
+    // Helper: Fill credential helper chip
+    function fillCredential(val) {
+      const input = document.getElementById("admin-username-input");
+      input.value = val;
+      const pwd = document.getElementById("admin-password-input");
+      pwd.focus();
+    }
+
+    // Helper: Toggle password show/hide
+    function togglePasswordVisibility() {
+      const pwd = document.getElementById("admin-password-input");
+      const btn = document.getElementById("toggle-pwd-btn");
+      if (pwd.type === "password") {
+        pwd.type = "text";
+        btn.textContent = "🙈 Hide";
+      } else {
+        pwd.type = "password";
+        btn.textContent = "👁️ Show";
+      }
+    }
+
+    // Step 1: Handle Login with Email or Phone & Password -> Triggers 2FA OTP
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      const username = document.getElementById("admin-username-input").value.trim();
+      const password = document.getElementById("admin-password-input").value;
+      if (!username || !password) return;
+
+      const submitBtn = document.getElementById("btn-login-submit");
+      const origText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = "<span>Checking Credentials...</span>";
+
+      try {
+        const res = await fetch("/api/admin/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success && data.requiresOtp) {
+          CURRENT_OTP_SESSION_ID = data.otpSessionId;
+          sessionStorage.setItem("admin_otp_session_id", data.otpSessionId);
+
+          // Switch to Step 2: OTP Verification
+          document.getElementById("login-step-1").style.display = "none";
+          document.getElementById("login-step-2").style.display = "block";
+
+          // Update target display (masked for security)
+          if (data.maskedTarget) {
+            document.getElementById("otp-phone-display").textContent = data.maskedTarget;
+          }
+
+          // Clear any previous error banner
+          const errBanner = document.getElementById("otp-error-banner");
+          if (errBanner) {
+            errBanner.style.display = "none";
+            errBanner.textContent = "";
+          }
+
+          // Clear digit boxes & focus first digit
+          for (let i = 0; i < 6; i++) {
+            const box = document.getElementById(`otp-digit-${i}`);
+            if (box) box.value = "";
+          }
+          updateOtpFilledState();
+          const firstBox = document.getElementById("otp-digit-0");
+          if (firstBox) firstBox.focus();
+
+          startResendCountdown(data.cooldownSeconds || 60);
+          startOtpExpiryCountdown(data.expiresInSeconds || 300);
+          loadDevOtpPreview();
+          showToast(`📲 A verification code has been sent to your registered mobile number.`);
+        } else {
+          showToast("❌ " + (data.error || "Invalid credentials. Please verify your email/phone and password."));
+          document.getElementById("admin-password-input").value = "";
+          document.getElementById("admin-password-input").focus();
+        }
+      } catch (err) {
+        showToast("❌ Could not connect to server. Please check your network.");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = origText;
+      }
+    }
+
+    // Step 2: Verify 6-digit OTP (Real-time auto-verify or button click)
+    async function handleVerifyOtp(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      if (IS_VERIFYING_OTP) return;
+      
+      const otpCode = getEnteredOtpCode();
+      const errBanner = document.getElementById("otp-error-banner");
+
+      if (otpCode.length < 6 || !/^\d{6}$/.test(otpCode)) {
+        if (errBanner) {
+          errBanner.textContent = "Invalid OTP. Please try again.";
+          errBanner.style.display = "block";
+        }
+        showToast("⚠️ Please enter all 6 numeric digits.");
+        const emptyIdx = [0,1,2,3,4,5].find(i => !document.getElementById(`otp-digit-${i}`).value);
+        if (emptyIdx !== undefined) document.getElementById(`otp-digit-${emptyIdx}`).focus();
+        return;
+      }
+
+      const sessionId = CURRENT_OTP_SESSION_ID || sessionStorage.getItem("admin_otp_session_id");
+      if (!sessionId) {
+        if (errBanner) {
+          errBanner.textContent = "OTP expired. Please request a new OTP.";
+          errBanner.style.display = "block";
+        }
+        showToast("⚠️ OTP expired. Please request a new OTP.");
+        return;
+      }
+
+      if (errBanner) errBanner.style.display = "none";
+
+      IS_VERIFYING_OTP = true;
+      const verifyBtn = document.getElementById("btn-otp-submit");
+      const origText = verifyBtn.innerHTML;
+      verifyBtn.disabled = true;
+      verifyBtn.innerHTML = "<span>⚡ Verifying OTP in real-time...</span>";
+
+      try {
+        const res = await fetch("/api/admin/verify-otp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            otpSessionId: sessionId,
+            otp: otpCode
+          })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          if (RESEND_TIMER_INTERVAL) clearInterval(RESEND_TIMER_INTERVAL);
+          if (OTP_EXPIRY_INTERVAL) clearInterval(OTP_EXPIRY_INTERVAL);
+          sessionStorage.removeItem("admin_otp_session_id");
+          CURRENT_OTP_SESSION_ID = null;
+          showToast("🎉 Two-factor authentication successful!");
+          showDashboard();
+        } else {
+          const errMsg = data.error || "Invalid OTP. Please try again.";
+          if (errBanner) {
+            errBanner.textContent = errMsg;
+            errBanner.style.display = "block";
+          }
+          showToast("❌ " + errMsg);
+
+          // Real-time shake feedback on error
+          const grid = document.getElementById("otp-inputs-grid");
+          if (grid) {
+            grid.classList.add("otp-shake");
+            setTimeout(() => grid.classList.remove("otp-shake"), 400);
+          }
+
+          // Clear digits and refocus first box
+          for (let i = 0; i < 6; i++) {
+            const box = document.getElementById(`otp-digit-${i}`);
+            if (box) box.value = "";
+          }
+          updateOtpFilledState();
+          const firstBox = document.getElementById("otp-digit-0");
+          if (firstBox) firstBox.focus();
+        }
+      } catch (err) {
+        showToast("❌ Network error verifying OTP.");
+      } finally {
+        IS_VERIFYING_OTP = false;
+        verifyBtn.disabled = false;
+        verifyBtn.innerHTML = origText;
+      }
+    }
+
+    // Resend OTP
+    async function handleResendOtp() {
+      const sessionId = CURRENT_OTP_SESSION_ID || sessionStorage.getItem("admin_otp_session_id");
+      if (!sessionId) {
+        showToast("⚠️ Session expired. Please sign in again.");
+        backToStep1();
+        return;
+      }
+      
+      const resendBtn = document.getElementById("btn-resend-otp");
+      resendBtn.disabled = true;
+      resendBtn.textContent = "Resending...";
+
+      try {
+        const res = await fetch("/api/admin/resend-otp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            otpSessionId: sessionId
+          })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          if (data.otpSessionId) {
+            CURRENT_OTP_SESSION_ID = data.otpSessionId;
+            sessionStorage.setItem("admin_otp_session_id", data.otpSessionId);
+          }
+          startResendCountdown(data.cooldownSeconds || 60);
+          startOtpExpiryCountdown(data.expiresInSeconds || 300);
+          loadDevOtpPreview();
+          showToast("🔄 A fresh verification code has been dispatched!");
+          const errBanner = document.getElementById("otp-error-banner");
+          if (errBanner) errBanner.style.display = "none";
+          // Clear digits and focus first
+          for (let i = 0; i < 6; i++) {
+            const box = document.getElementById(`otp-digit-${i}`);
+            if (box) box.value = "";
+          }
+          updateOtpFilledState();
+          const firstBox = document.getElementById("otp-digit-0");
+          if (firstBox) firstBox.focus();
+        } else {
+          showToast("❌ " + (data.error || "Could not resend OTP."));
+          resendBtn.disabled = false;
+        }
+      } catch (err) {
+        showToast("❌ Could not connect to server.");
+        resendBtn.disabled = false;
+      }
+    }
+
+    // Countdown Timer for Resend
+    function startResendCountdown(seconds = 60) {
+      if (RESEND_TIMER_INTERVAL) clearInterval(RESEND_TIMER_INTERVAL);
+      RESEND_SECONDS = seconds;
+      const btn = document.getElementById("btn-resend-otp");
+      const countdownSpan = document.getElementById("resend-countdown");
+      
+      btn.disabled = true;
+      countdownSpan.textContent = RESEND_SECONDS;
+
+      RESEND_TIMER_INTERVAL = setInterval(() => {
+        RESEND_SECONDS--;
+        if (RESEND_SECONDS <= 0) {
+          clearInterval(RESEND_TIMER_INTERVAL);
+          btn.disabled = false;
+          btn.innerHTML = "<span>🔄 Resend OTP</span>";
+        } else {
+          countdownSpan.textContent = RESEND_SECONDS;
+        }
+      }, 1000);
+    }
+
+    // Back to Step 1
+    function backToStep1() {
+      if (RESEND_TIMER_INTERVAL) clearInterval(RESEND_TIMER_INTERVAL);
+      if (OTP_EXPIRY_INTERVAL) clearInterval(OTP_EXPIRY_INTERVAL);
+      sessionStorage.removeItem("admin_otp_session_id");
+      CURRENT_OTP_SESSION_ID = null;
+      document.getElementById("login-step-2").style.display = "none";
+      document.getElementById("login-step-1").style.display = "block";
+      document.getElementById("admin-password-input").focus();
+    }
+
+    // Setup 6-digit Real-Time OTP Handlers (Auto-advance, backspace, paste, real-time typing & auto-verify)
+    function setupOtpInputHandlers() {
+      for (let i = 0; i < 6; i++) {
+        const input = document.getElementById(`otp-digit-${i}`);
+        if (!input) continue;
+
+        // Auto-select on focus for effortless overwrite
+        input.addEventListener("focus", () => {
+          input.select();
+        });
+
+        // Real-time key handling (Digits, backspace jump-back, arrows)
+        input.addEventListener("keydown", (e) => {
+          const errBanner = document.getElementById("otp-error-banner");
+          if (errBanner) errBanner.style.display = "none";
+
+          // If numeric digit (0-9)
+          if (/^[0-9]$/.test(e.key)) {
+            e.preventDefault();
+            input.value = e.key;
+            updateOtpFilledState();
+
+            if (i < 5) {
+              const next = document.getElementById(`otp-digit-${i + 1}`);
+              if (next) {
+                next.focus();
+                next.select();
+              }
+            }
+            checkAndAutoVerifyOtp();
+            return;
+          }
+
+          // Real-time backspace
+          if (e.key === "Backspace") {
+            e.preventDefault();
+            if (input.value) {
+              input.value = "";
+              updateOtpFilledState();
+            } else if (i > 0) {
+              const prev = document.getElementById(`otp-digit-${i - 1}`);
+              if (prev) {
+                prev.value = "";
+                updateOtpFilledState();
+                prev.focus();
+              }
+            }
+            return;
+          }
+
+          // Arrow keys navigation
+          if (e.key === "ArrowLeft" && i > 0) {
+            e.preventDefault();
+            const prev = document.getElementById(`otp-digit-${i - 1}`);
+            if (prev) {
+              prev.focus();
+              prev.select();
+            }
+          } else if (e.key === "ArrowRight" && i < 5) {
+            e.preventDefault();
+            const next = document.getElementById(`otp-digit-${i + 1}`);
+            if (next) {
+              next.focus();
+              next.select();
+            }
+          }
+        });
+
+        // Real-time input event (Catches mobile soft keyboards, virtual keypads, SMS autofill)
+        input.addEventListener("input", (e) => {
+          const raw = input.value.replace(/\D/g, "");
+          
+          if (raw.length > 1) {
+            // Multi-digit paste or SMS autofill
+            for (let j = 0; j < 6; j++) {
+              const box = document.getElementById(`otp-digit-${j}`);
+              if (box) box.value = raw[j] || "";
+            }
+            updateOtpFilledState();
+            const focusIdx = Math.min(raw.length, 5);
+            const focusEl = document.getElementById(`otp-digit-${focusIdx}`);
+            if (focusEl) focusEl.focus();
+            checkAndAutoVerifyOtp();
+            return;
+          }
+
+          input.value = raw.slice(-1);
+          updateOtpFilledState();
+
+          if (raw && i < 5) {
+            const next = document.getElementById(`otp-digit-${i + 1}`);
+            if (next) {
+              next.focus();
+              next.select();
+            }
+          }
+
+          checkAndAutoVerifyOtp();
+        });
+
+        // Real-time paste handler
+        input.addEventListener("paste", (e) => {
+          e.preventDefault();
+          const pasteData = (e.clipboardData || window.clipboardData).getData("text").replace(/\D/g, "");
+          if (pasteData.length > 0) {
+            for (let j = 0; j < 6; j++) {
+              const box = document.getElementById(`otp-digit-${j}`);
+              if (box) box.value = pasteData[j] || "";
+            }
+            updateOtpFilledState();
+            const focusIdx = Math.min(pasteData.length, 5);
+            const focusEl = document.getElementById(`otp-digit-${focusIdx}`);
+            if (focusEl) focusEl.focus();
+            checkAndAutoVerifyOtp();
+          }
+        });
+      }
+    }
+
+    async function adminLogout() {
+      try {
+        sessionStorage.removeItem("admin_otp_session_id");
+        await fetch("/api/admin/logout", {
+          method: "POST",
+          credentials: "include"
+        });
+      } catch (err) {}
+      window.location.reload();
+    }
+
+    function showDashboard() {
+      document.getElementById("admin-login-screen").style.display = "none";
+      document.getElementById("admin-dashboard-screen").style.display = "block";
+      document.getElementById("admin-nav-actions").style.display = "flex";
+      fetchOrders();
+      fetchFinanceData();
+    }
+
+    // View Switcher: Orders vs Finance
+    function switchAdminView(view) {
+      ACTIVE_VIEW = view;
+      const ordersSec = document.getElementById("section-orders-view");
+      const financeSec = document.getElementById("section-finance-view");
+      const btnOrders = document.getElementById("tab-switch-orders");
+      const btnFinance = document.getElementById("tab-switch-finance");
+      const headerBtn = document.getElementById("btn-header-primary-action");
+
+      if (view === 'orders') {
+        ordersSec.style.display = "block";
+        financeSec.style.display = "none";
+        btnOrders.classList.add("active");
+        btnFinance.classList.remove("active");
+        headerBtn.innerHTML = `<span>➕ Add Manual Order</span>`;
+      } else {
+        ordersSec.style.display = "none";
+        financeSec.style.display = "block";
+        btnOrders.classList.remove("active");
+        btnFinance.classList.add("active");
+        headerBtn.innerHTML = `<span>➕ Record Transaction</span>`;
+        fetchFinanceData();
+      }
+    }
+
+    function handleHeaderPrimaryAction() {
+      if (ACTIVE_VIEW === 'orders') {
+        openNewOrderModal();
+      } else {
+        openNewTxnModal();
+      }
+    }
+
+    function handleHeaderExportAction() {
+      if (ACTIVE_VIEW === 'orders') {
+        exportOrdersToCSV();
+      } else {
+        exportFinanceToCSV();
+      }
+    }
+
+    // =========================================================================
+    // ORDERS CONTROLLER
+    // =========================================================================
+    async function fetchOrders(page) {
+      if (page !== undefined && page !== null) {
+        CURRENT_PAGE = page;
+      }
+      try {
+        const queryParams = new URLSearchParams({
+          page: CURRENT_PAGE,
+          limit: PAGE_SIZE,
+          status: CURRENT_ORDER_FILTER,
+          q: SEARCH_QUERY
+        });
+
+        const res = await fetch(`/api/orders?${queryParams.toString()}`, { credentials: "include" });
+        if (res.status === 401) {
+          showToast("Session expired. Please log in.");
+          window.location.reload();
+          return;
+        }
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && Array.isArray(data.orders)) {
+            ALL_ORDERS = data.orders;
+            TOTAL_ORDERS = Number(data.total) || data.orders.length;
+            TOTAL_PAGES = Number(data.totalPages) || 1;
+            CURRENT_PAGE = Number(data.page) || 1;
+
+            if (data.stats) {
+              updateDashboardStats(data.stats);
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching orders:", err);
+      }
+      renderOrdersList();
+      updatePaginationControls();
+    }
+
+    function updateDashboardStats(stats) {
+      const total = stats.totalOrders || stats.total || 0;
+      const pending = (stats.received || 0) + (stats.confirmed || 0);
+      const shipped = stats.shipped || 0;
+      const delivered = stats.delivered || 0;
+      const revenue = stats.revenue || 0;
+
+      document.getElementById("stat-total-orders").textContent = total.toLocaleString('en-IN');
+      document.getElementById("stat-pending-orders").textContent = pending.toLocaleString('en-IN');
+      document.getElementById("stat-shipped-orders").textContent = shipped.toLocaleString('en-IN');
+      document.getElementById("stat-delivered-orders").textContent = delivered.toLocaleString('en-IN');
+      document.getElementById("stat-total-revenue").textContent = `₹${revenue.toLocaleString('en-IN')}`;
+
+      document.getElementById("badge-top-orders-count").textContent = total.toLocaleString('en-IN');
+      document.getElementById("badge-all").textContent = total.toLocaleString('en-IN');
+      document.getElementById("badge-received").textContent = (stats.received || 0).toLocaleString('en-IN');
+      document.getElementById("badge-confirmed").textContent = (stats.confirmed || 0).toLocaleString('en-IN');
+      document.getElementById("badge-packed").textContent = (stats.packed || 0).toLocaleString('en-IN');
+      document.getElementById("badge-shipped").textContent = (stats.shipped || 0).toLocaleString('en-IN');
+      document.getElementById("badge-delivered").textContent = (stats.delivered || 0).toLocaleString('en-IN');
+    }
+
+    function updatePaginationControls() {
+      const bar = document.getElementById("orders-pagination-bar");
+      if (!bar) return;
+
+      const fromItem = TOTAL_ORDERS === 0 ? 0 : (CURRENT_PAGE - 1) * PAGE_SIZE + 1;
+      const toItem = Math.min(CURRENT_PAGE * PAGE_SIZE, TOTAL_ORDERS);
+
+      const infoText = document.getElementById("pagination-info-text");
+      if (infoText) {
+        infoText.innerHTML = `Showing <strong>${fromItem.toLocaleString('en-IN')}</strong> to <strong>${toItem.toLocaleString('en-IN')}</strong> of <strong>${TOTAL_ORDERS.toLocaleString('en-IN')}</strong> orders`;
+      }
+
+      const pageText = document.getElementById("pagination-current-page-text");
+      if (pageText) {
+        pageText.textContent = `Page ${CURRENT_PAGE.toLocaleString('en-IN')} of ${TOTAL_PAGES.toLocaleString('en-IN')}`;
+      }
+
+      const btnFirst = document.getElementById("btn-page-first");
+      const btnPrev = document.getElementById("btn-page-prev");
+      const btnNext = document.getElementById("btn-page-next");
+      const btnLast = document.getElementById("btn-page-last");
+
+      if (btnFirst) btnFirst.disabled = CURRENT_PAGE <= 1;
+      if (btnPrev) btnPrev.disabled = CURRENT_PAGE <= 1;
+      if (btnNext) btnNext.disabled = CURRENT_PAGE >= TOTAL_PAGES;
+      if (btnLast) btnLast.disabled = CURRENT_PAGE >= TOTAL_PAGES;
+    }
+
+    function goToPage(page) {
+      if (page < 1 || page > TOTAL_PAGES || page === CURRENT_PAGE) return;
+      fetchOrders(page);
+    }
+
+    function changePageLimit(newLimit) {
+      PAGE_SIZE = parseInt(newLimit, 10) || 25;
+      CURRENT_PAGE = 1;
+      fetchOrders(1);
+    }
+
+    function filterOrders(filterName) {
+      CURRENT_ORDER_FILTER = filterName;
+      CURRENT_PAGE = 1;
+      document.querySelectorAll("#section-orders-view .tab-btn").forEach(btn => btn.classList.remove("active"));
+      event.currentTarget.classList.add("active");
+      fetchOrders(1);
+    }
+
+    function handleAdminSearch() {
+      clearTimeout(SEARCH_DEBOUNCE_TIMER);
+      SEARCH_DEBOUNCE_TIMER = setTimeout(() => {
+        SEARCH_QUERY = document.getElementById("admin-search-input").value.trim().toLowerCase();
+        CURRENT_PAGE = 1;
+        fetchOrders(1);
+      }, 250);
+    }
+
+    function renderOrdersList() {
+      const container = document.getElementById("orders-list-container");
+      let list = ALL_ORDERS;
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="empty-admin-state">
+            <div class="empty-admin-icon">📭</div>
+            <h3 style="font-size:1.2rem; margin-bottom:0.4rem; color:var(--primary-maroon);">No orders found</h3>
+            <p style="font-size:0.9rem;">There are no orders matching the selected filter or search term.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map(order => createOrderCardHtml(order)).join("");
+    }
+
+    function createOrderCardHtml(order) {
+      const orderDate = new Date(order.createdAt).toLocaleString('en-IN', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      const cust = order.customer || {};
+      const cleanPhone = (cust.phone || '').replace(/[^0-9]/g, '');
+      const items = order.items || [];
+      const tracking = order.tracking || {};
+
+      const courierList = [
+        "India Post (Speed Post)",
+        "DTDC Express",
+        "Delhivery",
+        "Blue Dart",
+        "The Professional Couriers",
+        "ST Courier",
+        "Shadowfax",
+        "Other"
+      ];
+
+      return `
+        <div class="order-card" id="card-${order.id}">
+          <div class="order-card-header">
+            <div class="order-id-group">
+              <span class="order-id-badge">#${order.id}</span>
+              <span class="order-date">📅 ${orderDate}</span>
+              <span class="status-pill status-${order.status}">
+                ● ${formatStatusName(order.status)}
+              </span>
+              <span style="font-size:0.8rem; font-weight:700; color:#059669; background:#DCFCE7; padding:2px 8px; border-radius:4px; border:1px solid #A7F3D0;">
+                ⚡ Prepaid UPI (Paid)
+              </span>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <button class="btn-print-slip" onclick="printPackingSlip('${order.id}')" title="Print Packing Slip">
+                <span>🖨️ Packing Slip</span>
+              </button>
+              <button class="btn-print-slip" onclick="deleteOrder('${order.id}')" style="color:#DC2626;" title="Delete Test Order">
+                <span>🗑️</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="order-card-body">
+            <div class="customer-info-box">
+              <div class="box-title">
+                <span>👤 Customer &amp; Shipping Destination</span>
+              </div>
+              <div class="cust-detail-row">
+                <strong>Name:</strong>
+                <span>${cust.name || 'N/A'}</span>
+              </div>
+              <div class="cust-detail-row">
+                <strong>Phone:</strong>
+                <span><strong>${cust.phone || 'N/A'}</strong></span>
+              </div>
+              <div class="cust-detail-row">
+                <strong>Address:</strong>
+                <span>${cust.address || ''}, ${cust.city || ''}, ${cust.state || ''} - <strong>${cust.pincode || ''}</strong></span>
+              </div>
+              ${order.notes ? `
+                <div class="cust-detail-row" style="margin-top:0.4rem; padding-top:0.4rem; border-top:1px dashed #eee;">
+                  <strong>Notes:</strong>
+                  <span style="color:#B45309; font-style:italic;">"${order.notes}"</span>
+                </div>
+              ` : ''}
+
+              <div class="cust-actions-bar">
+                ${cleanPhone ? `
+                  <a href="https://wa.me/${cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone}" target="_blank" class="btn-cust-wa">
+                    <span>💬 Chat on WhatsApp</span>
+                  </a>
+                  <a href="tel:${cust.phone}" class="btn-cust-call">
+                    <span>📞 Call Customer</span>
+                  </a>
+                ` : ''}
+              </div>
+            </div>
+
+            <div class="customer-info-box">
+              <div class="box-title">
+                <span>📦 Ordered Items (${items.length} items)</span>
+              </div>
+              <table class="items-table">
+                <thead>
+                  <tr>
+                    <th>Item &amp; Pack</th>
+                    <th style="text-align:center;">Qty</th>
+                    <th style="text-align:right;">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${items.map(item => `
+                    <tr>
+                      <td>
+                        <strong>${item.name}</strong>
+                        <div style="font-size:0.75rem; color:var(--text-muted);">${item.weight || ''}</div>
+                      </td>
+                      <td style="text-align:center;">${item.qty}</td>
+                      <td style="text-align:right;">₹${(item.unitPrice || 0) * (item.qty || 1)}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+
+              <div class="order-totals-row">
+                <span>Grand Total Amount:</span>
+                <span style="color:var(--primary-maroon); font-size:1.15rem; font-weight:800;">₹${order.grandTotal}</span>
+              </div>
+            </div>
+
+            <!-- GIVE TRACKING ID SECTION -->
+            <div class="order-dispatch-panel">
+              <div class="box-title" style="margin-bottom:0.75rem;">
+                <span>🚚 Courier &amp; Tracking ID Assignment</span>
+              </div>
+
+              <form onsubmit="handleSaveTracking(event, '${order.id}')" class="tracking-form-grid">
+                <div class="form-group-admin">
+                  <label>Order Status</label>
+                  <select id="status-${order.id}" class="input-admin" style="font-weight:700;">
+                    <option value="received" ${order.status === 'received' ? 'selected' : ''}>🔔 Order Received</option>
+                    <option value="confirmed" ${order.status === 'confirmed' ? 'selected' : ''}>👍 Confirmed</option>
+                    <option value="packed" ${order.status === 'packed' ? 'selected' : ''}>🎁 Packed & Ready</option>
+                    <option value="shipped" ${order.status === 'shipped' ? 'selected' : ''}>🚚 Dispatched / Shipped</option>
+                    <option value="delivered" ${order.status === 'delivered' ? 'selected' : ''}>✅ Delivered</option>
+                    <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>❌ Cancelled</option>
+                  </select>
+                </div>
+
+                <div class="form-group-admin">
+                  <label>Courier Partner</label>
+                  <select id="courier-${order.id}" class="input-admin" onchange="autoFillTrackingUrl('${order.id}')">
+                    <option value="">-- Select Courier --</option>
+                    ${courierList.map(c => `
+                      <option value="${c}" ${tracking.courier === c ? 'selected' : ''}>${c}</option>
+                    `).join('')}
+                  </select>
+                </div>
+
+                <div class="form-group-admin">
+                  <label>Tracking ID / AWB Number</label>
+                  <input type="text" id="track-id-${order.id}" class="input-admin" placeholder="e.g. EP849204910IN" value="${tracking.trackingId || ''}">
+                  <input type="hidden" id="track-url-${order.id}" value="${tracking.trackingUrl || ''}">
+                </div>
+
+                <div style="display:flex; gap:0.5rem; align-items:flex-end;">
+                  <button type="submit" class="btn-save-tracking" title="Save Tracking ID and Status">
+                    <span>💾 Save Tracking</span>
+                  </button>
+                  
+                  ${cleanPhone ? `
+                    <button type="button" class="btn-notify-wa" onclick="sendTrackingOnWhatsApp('${order.id}')" title="Send Tracking ID directly to Customer's WhatsApp">
+                      <span>📲 Send to Customer</span>
+                    </button>
+                  ` : ''}
+                </div>
+              </form>
+
+              ${tracking.trackingId ? `
+                <div class="tracking-active-badge">
+                  <span>✅ <strong>Dispatched via ${tracking.courier || 'Courier'}:</strong></span>
+                  <span style="font-family:monospace; font-weight:700; background:#fff; padding:2px 8px; border-radius:4px; border:1px solid #A5D6A7;">
+                    ${tracking.trackingId}
+                  </span>
+                  ${tracking.trackingUrl ? `
+                    <a href="${tracking.trackingUrl}" target="_blank" rel="noopener noreferrer">
+                      🌐 Open Live Courier Tracking Page &rarr;
+                    </a>
+                  ` : ''}
+                </div>
+              ` : `
+                <div style="margin-top:0.5rem; font-size:0.8rem; color:#92400E; background:#FEF3C7; padding:4px 10px; border-radius:6px; display:inline-block;">
+                  ⚠️ No tracking ID assigned yet. Enter the consignment number above once dispatched.
+                </div>
+              `}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function formatStatusName(status) {
+      switch (status) {
+        case 'received': return '🔔 Received';
+        case 'confirmed': return '👍 Confirmed';
+        case 'packed': return '🎁 Packed';
+        case 'shipped': return '🚚 Dispatched';
+        case 'delivered': return '✅ Delivered';
+        case 'cancelled': return '❌ Cancelled';
+        default: return status;
+      }
+    }
+
+    function autoFillTrackingUrl(orderId) {
+      const courierSelect = document.getElementById(`courier-${orderId}`);
+      const trackingUrlInput = document.getElementById(`track-url-${orderId}`);
+      const selectedCourier = courierSelect.value;
+      if (COURIER_URL_MAP[selectedCourier]) {
+        trackingUrlInput.value = COURIER_URL_MAP[selectedCourier];
+      }
+    }
+
+    async function handleSaveTracking(e, orderId) {
+      e.preventDefault();
+      const status = document.getElementById(`status-${orderId}`).value;
+      const courier = document.getElementById(`courier-${orderId}`).value;
+      const trackingId = document.getElementById(`track-id-${orderId}`).value.trim();
+      let trackingUrl = document.getElementById(`track-url-${orderId}`).value.trim();
+
+      if (!trackingUrl && courier && COURIER_URL_MAP[courier]) {
+        trackingUrl = COURIER_URL_MAP[courier];
+      }
+
+      let finalStatus = status;
+      if (trackingId && (status === 'received' || status === 'confirmed' || status === 'packed')) {
+        finalStatus = 'shipped';
+        document.getElementById(`status-${orderId}`).value = 'shipped';
+      }
+
+      const updatePayload = {
+        status: finalStatus,
+        tracking: {
+          courier,
+          trackingId,
+          trackingUrl,
+          dispatchedAt: new Date().toISOString()
+        }
+      };
+
+      try {
+        const res = await fetch(`/api/orders/${orderId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify(updatePayload)
+        });
+
+        if (res.ok) {
+          showToast(`✅ Order #${orderId} tracking saved!`);
+          fetchOrders(CURRENT_PAGE);
+          fetchFinanceData();
+        } else {
+          showToast("Failed to save tracking.");
+        }
+      } catch (err) {
+        showToast("Error updating order tracking.");
+      }
+    }
+
+    function sendTrackingOnWhatsApp(orderId) {
+      const order = ALL_ORDERS.find(o => o.id === orderId);
+      if (!order) return;
+
+      const cust = order.customer || {};
+      const cleanPhone = (cust.phone || '').replace(/[^0-9]/g, '');
+      if (!cleanPhone) {
+        showToast("⚠️ No phone number available for this customer.");
+        return;
+      }
+
+      const tracking = order.tracking || {};
+      const courier = tracking.courier || 'Express Courier';
+      const trackId = tracking.trackingId;
+
+      if (!trackId) {
+        showToast("⚠️ Please enter and save the Tracking ID first!");
+        return;
+      }
+
+      let msg = `*Namaskaram ${cust.name || 'Customer'} Garu!* 🏺📦\n\n`;
+      msg += `Great news! Your order *#${order.id}* from *Chinnodu Foods* has been dispatched!\n\n`;
+      msg += `🚚 *Courier Partner:* ${courier}\n`;
+      msg += `🔖 *Tracking ID / Consignment No.:* ${trackId}\n`;
+      if (tracking.trackingUrl) {
+        msg += `🔗 *Track Your Parcel Live:* ${tracking.trackingUrl}\n`;
+      }
+      msg += `\nYou can also track your order directly on our website:\nhttps://chinnodufoods.in\n\n`;
+      msg += `Thank you for choosing Chinnodu Foods - Authentic Homemade Pickles & Sweets!\n`;
+      msg += `For any assistance, reply to this message or call +91 73829 14229.`;
+
+      const formattedPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
+      const waUrl = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, "_blank");
+    }
+
+    function printPackingSlip(orderId) {
+      const order = ALL_ORDERS.find(o => o.id === orderId);
+      if (!order) return;
+
+      const cust = order.customer || {};
+      const items = order.items || [];
+      const tracking = order.tracking || {};
+
+      const printHtml = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 2px solid #000; padding: 20px;">
+          <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px;">
+            <h1 style="margin: 0; font-size: 24px; color: #6B1426;">CHINNODU FOODS</h1>
+            <p style="margin: 4px 0; font-size: 13px;">Authentic Homemade Andhra Pickles & Traditional Sweets</p>
+            <p style="margin: 2px 0; font-size: 12px;">Website: chinnodufoods.in | Ph: +91 73829 14229 / 78930 06417</p>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 13px;">
+            <div>
+              <strong>ORDER ID:</strong> #${order.id}<br>
+              <strong>DATE:</strong> ${new Date(order.createdAt).toLocaleDateString('en-IN')}<br>
+              <strong>PAYMENT:</strong> PREPAID UPI (PAID)
+            </div>
+            <div style="text-align: right;">
+              <strong>COURIER:</strong> ${tracking.courier || 'Pending'}<br>
+              <strong>TRACKING ID:</strong> ${tracking.trackingId || 'N/A'}
+            </div>
+          </div>
+
+          <div style="background: #f5f5f5; padding: 10px; border: 1px solid #ccc; margin-bottom: 15px; font-size: 13px;">
+            <strong style="text-decoration: underline;">DELIVERY ADDRESS (CONSIGNEE):</strong><br>
+            <strong>${cust.name}</strong><br>
+            Phone: <strong>${cust.phone}</strong><br>
+            ${cust.address}, ${cust.city}, ${cust.state} - <strong>PIN: ${cust.pincode}</strong>
+          </div>
+
+          <table style="width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 15px;">
+            <thead>
+              <tr style="background: #eee;">
+                <th style="border: 1px solid #000; padding: 6px; text-align: left;">Item Description</th>
+                <th style="border: 1px solid #000; padding: 6px; text-align: center;">Pack</th>
+                <th style="border: 1px solid #000; padding: 6px; text-align: center;">Qty</th>
+                <th style="border: 1px solid #000; padding: 6px; text-align: right;">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${items.map(item => `
+                <tr>
+                  <td style="border: 1px solid #000; padding: 6px;">${item.name}</td>
+                  <td style="border: 1px solid #000; padding: 6px; text-align: center;">${item.weight || ''}</td>
+                  <td style="border: 1px solid #000; padding: 6px; text-align: center;">${item.qty}</td>
+                  <td style="border: 1px solid #000; padding: 6px; text-align: right;">₹${(item.unitPrice || 0) * (item.qty || 1)}</td>
+                </tr>
+              `).join('')}
+              <tr style="font-weight: bold; background: #fafafa;">
+                <td colspan="3" style="border: 1px solid #000; padding: 6px; text-align: right;">GRAND TOTAL:</td>
+                <td style="border: 1px solid #000; padding: 6px; text-align: right;">₹${order.grandTotal}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="font-size: 11px; text-align: center; color: #555; border-top: 1px dashed #999; padding-top: 8px;">
+            Freshly prepared with pure ingredients. Thank you for your support to rural homemakers!
+          </div>
+        </div>
+      `;
+
+      const printContainer = document.getElementById("print-container");
+      printContainer.innerHTML = printHtml;
+      printContainer.style.display = "block";
+      window.print();
+      printContainer.style.display = "none";
+    }
+
+    async function deleteOrder(orderId) {
+      if (!confirm(`Are you sure you want to delete order #${orderId}? This cannot be undone.`)) return;
+
+      try {
+        const res = await fetch(`/api/orders/${orderId}`, {
+          method: "DELETE",
+          credentials: "include"
+        });
+        if (res.ok) {
+          showToast(`Order #${orderId} deleted.`);
+          fetchOrders(CURRENT_PAGE);
+        }
+      } catch (err) {
+        showToast("Error deleting order.");
+      }
+    }
+
+    function exportOrdersToCSV() {
+      const queryParams = new URLSearchParams({
+        status: CURRENT_ORDER_FILTER,
+        search: SEARCH_QUERY
+      });
+      window.location.href = `/api/orders/export?${queryParams.toString()}`;
+      showToast("📥 Exporting orders via ultra-fast streaming CSV...");
+    }
+
+    function openNewOrderModal() { document.getElementById("new-order-modal").classList.add("active"); }
+    function closeNewOrderModal() { document.getElementById("new-order-modal").classList.remove("active"); }
+
+    async function handleManualOrderSubmit(e) {
+      e.preventDefault();
+      
+      const newOrder = {
+        id: `CF-${Math.floor(10000 + Math.random() * 90000)}`,
+        customer: {
+          name: document.getElementById("manual-name").value.trim(),
+          phone: document.getElementById("manual-phone").value.trim(),
+          address: document.getElementById("manual-address").value.trim(),
+          city: document.getElementById("manual-city").value.trim(),
+          state: document.getElementById("manual-state").value.trim(),
+          pincode: document.getElementById("manual-pincode").value.trim()
+        },
+        items: [
+          {
+            name: document.getElementById("manual-items-text").value.trim(),
+            weight: "Custom",
+            qty: 1,
+            unitPrice: Number(document.getElementById("manual-total").value) || 0
+          }
+        ],
+        subtotal: Number(document.getElementById("manual-total").value) || 0,
+        grandTotal: Number(document.getElementById("manual-total").value) || 0,
+        paymentMethod: 'upi',
+        notes: document.getElementById("manual-notes").value.trim()
+      };
+
+      try {
+        const res = await fetch("/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify(newOrder)
+        });
+        if (res.ok) {
+          showToast(`✅ Manual Order #${newOrder.id} created!`);
+          closeNewOrderModal();
+          document.getElementById("new-order-form").reset();
+          fetchOrders(1);
+          fetchFinanceData();
+        } else {
+          showToast("Failed to create manual order.");
+        }
+      } catch (err) {
+        showToast("Error creating manual order.");
+      }
+    }
+
+    // =========================================================================
+    // MONEY & ACCOUNTS DATABASE CONTROLLER
+    // =========================================================================
+    async function fetchFinanceData() {
+      try {
+        const [sumRes, txnRes] = await Promise.all([
+          fetch("/api/finance/summary", { credentials: "include" }),
+          fetch("/api/finance/transactions", { credentials: "include" })
+        ]);
+
+        if (sumRes.status === 401 || txnRes.status === 401) {
+          showToast("Session expired. Please log in.");
+          window.location.reload();
+          return;
+        }
+
+        if (sumRes.ok && txnRes.ok) {
+          const sumData = await sumRes.json();
+          const txnData = await txnRes.json();
+          FINANCE_DATA.summary = sumData.summary || {};
+          FINANCE_DATA.accounts = sumData.summary?.accounts || [];
+          FINANCE_DATA.transactions = txnData.transactions || [];
+        }
+      } catch (err) {
+        console.error("Error fetching finance data:", err);
+      }
+      renderFinanceDashboard();
+    }
+
+    function renderFinanceDashboard() {
+      const summary = FINANCE_DATA.summary || {};
+      const accounts = FINANCE_DATA.accounts || [];
+
+      const upiAcc = accounts.find(a => a.id === 'acc_upi');
+      const bankAcc = accounts.find(a => a.id === 'acc_bank');
+      const cashAcc = accounts.find(a => a.id === 'acc_cash');
+
+      document.getElementById("stat-fin-upi").textContent = `₹${(upiAcc?.balance || 0).toLocaleString('en-IN')}`;
+      document.getElementById("stat-fin-bank").textContent = `₹${(bankAcc?.balance || 0).toLocaleString('en-IN')}`;
+      document.getElementById("stat-fin-cash").textContent = `₹${(cashAcc?.balance || 0).toLocaleString('en-IN')}`;
+      document.getElementById("stat-fin-liquid").textContent = `₹${(summary.liquidTotal || 0).toLocaleString('en-IN')}`;
+
+      // Render Account Cards
+      const container = document.getElementById("accounts-cards-container");
+      container.innerHTML = accounts.map(acc => {
+        let cardClass = 'upi-card';
+        if (acc.id === 'acc_bank') cardClass = 'bank-card';
+        if (acc.id === 'acc_cash') cardClass = 'cash-card';
+
+        return `
+          <div class="account-card-box ${cardClass}">
+            <div class="acc-header">
+              <div>
+                <div class="acc-title">${acc.name}</div>
+                <div class="acc-id">${acc.identifier}</div>
+              </div>
+              <span class="txn-badge" style="background:#F3ECE1;">${acc.type.replace('_', ' ')}</span>
+            </div>
+            <div class="acc-balance-display">₹${Number(acc.balance || 0).toLocaleString('en-IN')}</div>
+            <div class="acc-footer-actions">
+              <span style="color:var(--text-muted);">Status: <strong style="color:#059669;">Active</strong></span>
+              <button type="button" class="btn-print-slip" style="padding:2px 8px; font-size:0.75rem;" onclick="promptAdjustBalance('${acc.id}', ${acc.balance || 0})">
+                ⚙️ Adjust Balance
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      renderLedgerTable();
+    }
+
+    function filterTransactions(type) {
+      CURRENT_TXN_FILTER = type;
+      document.querySelectorAll("#section-finance-view .tab-btn").forEach(btn => btn.classList.remove("active"));
+      event.currentTarget.classList.add("active");
+      renderLedgerTable();
+    }
+
+    function renderLedgerTable() {
+      const tbody = document.getElementById("ledger-table-body");
+      let list = FINANCE_DATA.transactions || [];
+
+      if (CURRENT_TXN_FILTER !== 'all') {
+        list = list.filter(t => t.type === CURRENT_TXN_FILTER);
+      }
+
+      if (list.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" style="text-align:center; padding:2rem; color:var(--text-muted);">
+              No transactions recorded for this filter.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = list.map(t => {
+        const dateStr = new Date(t.date).toLocaleString('en-IN', {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+
+        let typeBadge = `<span class="txn-badge txn-income">● Inflow</span>`;
+        let sign = '+';
+        let amountColor = '#059669';
+
+        if (t.type === 'expense') {
+          typeBadge = `<span class="txn-badge txn-expense">● Outflow</span>`;
+          sign = '-';
+          amountColor = '#DC2626';
+        } else if (t.type === 'transfer') {
+          typeBadge = `<span class="txn-badge txn-transfer">🔄 Transfer</span>`;
+          sign = '⇄';
+          amountColor = '#4338CA';
+        }
+
+        const accName = formatAccountName(t.accountId);
+
+        return `
+          <tr>
+            <td style="font-size:0.8rem; color:var(--text-muted);">${dateStr}</td>
+            <td style="font-family:monospace; font-weight:700;">#${t.id}</td>
+            <td>${typeBadge}</td>
+            <td><strong>${accName}</strong></td>
+            <td><span style="font-weight:600; color:var(--text-main);">${t.category || 'General'}</span></td>
+            <td>
+              <div>${t.description || ''}</div>
+              ${t.reference ? `<div style="font-size:0.75rem; color:var(--text-muted);">Ref: ${t.reference}</div>` : ''}
+              ${t.orderId ? `<div style="font-size:0.75rem; color:var(--primary-maroon);">Order: #${t.orderId}</div>` : ''}
+            </td>
+            <td style="text-align:right; font-weight:800; font-size:0.95rem; color:${amountColor};">
+              ${sign}₹${Number(t.amount || 0).toLocaleString('en-IN')}
+            </td>
+            <td style="text-align:center;">
+              <span style="font-size:0.75rem; text-transform:capitalize; color:#059669; font-weight:700;">
+                ${t.status || 'settled'}
+              </span>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function formatAccountName(accId) {
+      switch (accId) {
+        case 'acc_upi': return '📱 UPI Wallet';
+        case 'acc_bank': return '🏦 Bank (SBI)';
+        case 'acc_cash': return '💵 Cash Box';
+        default: return accId;
+      }
+    }
+
+    function openNewTxnModal() { document.getElementById("new-txn-modal").classList.add("active"); }
+    function closeNewTxnModal() { document.getElementById("new-txn-modal").classList.remove("active"); }
+
+    function handleTxnTypeChange() {
+      const type = document.getElementById("txn-type").value;
+      const destGroup = document.getElementById("transfer-destination-group");
+      if (type === 'transfer') {
+        destGroup.style.display = 'block';
+      } else {
+        destGroup.style.display = 'none';
+      }
+    }
+
+    async function handleTransactionSubmit(e) {
+      e.preventDefault();
+
+      const type = document.getElementById("txn-type").value;
+      const accountId = document.getElementById("txn-account").value;
+      const toAccountId = type === 'transfer' ? document.getElementById("txn-to-account").value : null;
+      const category = document.getElementById("txn-category").value;
+      const amount = Number(document.getElementById("txn-amount").value);
+      const desc = document.getElementById("txn-desc").value.trim();
+      const ref = document.getElementById("txn-ref").value.trim();
+
+      if (type === 'transfer' && accountId === toAccountId) {
+        showToast("⚠️ Source and Destination accounts cannot be the same!");
+        return;
+      }
+
+      const txnPayload = {
+        type,
+        accountId,
+        toAccountId,
+        category,
+        amount,
+        description: desc,
+        reference: ref
+      };
+
+      try {
+        const res = await fetch("/api/finance/transactions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify(txnPayload)
+        });
+
+        if (res.ok) {
+          showToast("✅ Transaction recorded successfully!");
+          closeNewTxnModal();
+          document.getElementById("new-txn-form").reset();
+          fetchFinanceData();
+        } else {
+          showToast("Failed to save transaction");
+        }
+      } catch (err) {
+        showToast("❌ Could not save transaction.");
+      }
+    }
+
+    async function promptAdjustBalance(accId, currentBal) {
+      const newBalStr = prompt(`Enter updated balance for ${formatAccountName(accId)} (Current: ₹${currentBal}):`, currentBal);
+      if (newBalStr === null) return;
+      const newBal = Number(newBalStr);
+      if (isNaN(newBal)) {
+        showToast("Invalid number entered!");
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/finance/accounts/${accId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ balance: newBal })
+        });
+        if (res.ok) {
+          showToast("✅ Account balance updated!");
+          fetchFinanceData();
+        }
+      } catch (err) {
+        showToast("❌ Error updating balance.");
+      }
+    }
+
+    function exportFinanceToCSV() {
+      const list = FINANCE_DATA.transactions || [];
+      if (list.length === 0) {
+        showToast("No financial transactions to export!");
+        return;
+      }
+
+      let csv = "Transaction ID,Date,Type,Account,Category,Amount,Reference,Description,Status\n";
+      list.forEach(t => {
+        const row = [
+          t.id,
+          `"${new Date(t.date).toLocaleString('en-IN')}"`,
+          t.type,
+          `"${formatAccountName(t.accountId)}"`,
+          `"${t.category || ''}"`,
+          t.amount,
+          `"${(t.reference || '').replace(/"/g, '""')}"`,
+          `"${(t.description || '').replace(/"/g, '""')}"`,
+          t.status
+        ];
+        csv += row.join(",") + "\n";
+      });
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `Chinnodu_Foods_Financial_Ledger_${new Date().toISOString().slice(0, 10)}.csv`;
+      link.click();
+      showToast("📥 Financial ledger exported to CSV!");
+    }
+
+    function showToast(message) {
+      const container = document.getElementById("toast-container");
+      if (!container) return;
+      const toast = document.createElement("div");
+      toast.className = "toast-message";
+      toast.innerHTML = `<span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.add("fade-out");
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
